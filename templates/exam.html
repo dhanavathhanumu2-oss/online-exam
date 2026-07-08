@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        {% if error %}
+            <div class="card">
+                <h1>Error</h1>
+                <p>{{ error }}</p>
+                <a href="{{ url_for('home') }}" class="btn btn-primary">Go Home</a>
+            </div>
+        {% else %}
+            <div class="timer-container">
+                <span id="timer">30:00</span>
+            </div>
+
+            <form id="examForm" action="{{ url_for('submit') }}" method="POST">
+                <div class="questions-wrapper">
+                    {% for q in questions %}
+                        <div class="card question-card">
+                            <h3>Question {{ loop.index }}</h3>
+                            <p class="question-text">{{ q.question }}</p>
+                            <div class="options">
+                                <label class="option">
+                                    <input type="radio" name="q_{{ q.id }}" value="A">
+                                    <span>A. {{ q.option_a }}</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="q_{{ q.id }}" value="B">
+                                    <span>B. {{ q.option_b }}</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="q_{{ q.id }}" value="C">
+                                    <span>C. {{ q.option_c }}</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="q_{{ q.id }}" value="D">
+                                    <span>D. {{ q.option_d }}</span>
+                                </label>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="submit-container">
+                    <button type="submit" class="btn btn-primary">Submit Exam</button>
+                </div>
+            </form>
+        {% endif %}
+    </div>
+
+    <script>
+        // Pass the total questions count to timer.js
+        window.questionsCount = {{ questions|length }};
+    </script>
+    <script src="{{ url_for('static', filename='js/timer.js') }}"></script>
+</body>
+</html>
