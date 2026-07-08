@@ -119,6 +119,8 @@ def result():
     )
 
 
+# Initialize the database on import (required for Gunicorn)
+initialize_database()
+
 if __name__ == "__main__":
-    initialize_database()
     app.run(debug=True)
