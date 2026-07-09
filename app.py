@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, session
 import os
 
-from database import create_table, insert_questions, get_all_questions, is_empty, clear_questions
+from database import create_table, insert_questions, get_all_questions, clear_questions
 from parser import load_questions_from_pdf
 
 app = Flask(__name__)
